@@ -1,0 +1,17 @@
+.wrapper_box {
+  box-sizing: border-box;
+  width: 80%;
+  height: 100%;
+  border: 2px solid #000;  
+  background-color: white;
+
+  padding: 10%;
+  overflow-y: auto;
+}
+
+.box-actions_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+
+    margin-top: 5%;
+}
