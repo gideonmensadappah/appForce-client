@@ -8,14 +8,18 @@ import {
 } from "../../redux/user/user-selector";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../redux/store";
-import { createUser, unSetUser } from "../../redux/user/user-reducer";
+import {
+  createUser,
+  unSetUser,
+  updateUser,
+} from "../../redux/user/user-reducer";
 import { IUser, Location, Name } from "../../interfaces/user/user-interface";
 import Input from "../Input";
 import { CustomButton } from "../CustomButton";
 
 import "./styles.css";
 import useForm from "../../Hooks/useForm";
-import { userMapIUser } from "../../utils/userMapIUser";
+import { userMapIUser, IUserMapEditUser } from "../../utils/userMapIUser";
 
 const wrapperStyle = {
   width: "100%",
@@ -27,9 +31,14 @@ const wrapperStyle = {
   display: "flex",
   justifyContent: "center",
 };
+
 enum HeaderText {
   CREATE = "Create New User",
   UPDATE = "Update User",
+}
+enum TypeForm {
+  CREATE = "create",
+  UPDATE = "update",
 }
 type Props = {};
 
@@ -59,13 +68,29 @@ export const CustomModal: FC<Props> = (props) => {
   };
 
   const handleSave = () => {
-    if (isEmpty(errors) || !hasAllValues(values)) {
-      alert("feilds are not ok");
-      return;
+    // if (isEmpty(errors) || !hasAllValues(values)) {
+    //   alert("feilds are not ok");
+    //   return;
+    // }
+
+    if (user?.id) {
+      dispatch(
+        updateUser({
+          ...userMapIUser(values),
+          id: user.id,
+          image: user.image,
+        })
+      );
+    } else {
+      dispatch(
+        createUser({
+          ...userMapIUser(values),
+          id: user?.id!,
+          image,
+        })
+      );
     }
 
-    const user = userMapIUser(values);
-    dispatch(createUser({ ...user, image }));
     dispatch(unSetUser());
     resetForm({});
   };
@@ -89,7 +114,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Email'
               name='email'
-              value={values.email}
+              value={values.email ?? user?.email ?? ""}
               onChange={handleChange}
             />
           </Typography>
@@ -98,7 +123,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Title'
               name='title'
-              value={values.title}
+              value={values.title ?? user?.name?.title ?? ""}
               onChange={handleChange}
               error={!!errors.title}
               autoComplete='off'
@@ -108,7 +133,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='First Name'
               name='firstName'
-              value={values.firstName}
+              value={values.firstName ?? user?.name?.first ?? ""}
               onChange={handleChange}
               error={!!errors.firstName}
               autoComplete='off'
@@ -118,7 +143,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Last Name'
               name='lastName'
-              value={values.lastName}
+              value={values.lastName ?? user?.name?.last ?? ""}
               onChange={handleChange}
               error={!!errors.lastName}
               autoComplete='off'
@@ -129,7 +154,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Country'
               name='country'
-              value={values.country}
+              value={values.country ?? user?.location?.country ?? ""}
               onChange={handleChange}
               error={!!errors.country}
               autoComplete='off'
@@ -139,7 +164,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='City'
               name='city'
-              value={values.city}
+              value={values.city ?? user?.location?.city ?? ""}
               onChange={handleChange}
               error={!!errors.city}
               autoComplete='off'
@@ -149,7 +174,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Street'
               name='street'
-              value={values.street}
+              value={values.street ?? user?.location?.street?.name ?? ""}
               onChange={handleChange}
               error={!!errors.street}
               autoComplete='off'

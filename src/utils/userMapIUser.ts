@@ -25,3 +25,21 @@ export const userMapIUser = (user: EditUser): IUser => {
     },
   };
 };
+
+export const IUserMapEditUser = (user: IUser): EditUser => {
+  const {
+    name: { first: firstName = "", last: lastName = "", title = "" },
+    email = "",
+    location,
+  } = user;
+
+  return {
+    firstName,
+    lastName,
+    title,
+    email,
+    country: location.country,
+    city: location.city,
+    street: location.street.name,
+  };
+};
