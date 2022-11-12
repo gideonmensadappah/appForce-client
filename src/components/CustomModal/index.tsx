@@ -44,7 +44,7 @@ export type EditUser = {
 
 export const CustomModal: FC<Props> = (props) => {
   const { headerText = "" } = props;
-
+  //
   const image = useSelector(radmonImageSelctor);
   const user = useSelector(currentUserSelector);
 
