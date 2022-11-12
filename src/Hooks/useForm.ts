@@ -46,6 +46,8 @@ enum TestCases {
   lastName = "lastName",
   title = "title",
   email = "email",
+  city = "city",
+  street = "street",
 }
 
 const MAX_NAME = 10;
