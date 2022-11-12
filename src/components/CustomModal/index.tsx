@@ -19,10 +19,12 @@ import Input from "../Input";
 import { CustomButton } from "../CustomButton";
 
 import useForm from "../../Hooks/useForm";
+
 import { userMapIUser } from "../../utils/userMapIUser";
+import { IUserMapEditUser } from "../../utils/IUserMapEditUser";
+import { hasAllValues } from "../../utils/hasAllValues";
 
 import "./styles.css";
-import { IUserMapEditUser } from "../../utils/IUserMapEditUser";
 
 const wrapperStyle = {
   width: "100%",
@@ -63,9 +65,12 @@ const initialNewUser: EditUser = {
 
 const ADDED_USER = "new user has been added!";
 const UPDATED_USER = "user has been updated!";
+const EMPTY_FIELDS = "all fields are required";
+
 export const CustomModal = () => {
   const image = useSelector(radmonImageSelctor);
   const user = useSelector(currentUserSelector);
+
   const { handleChange, resetForm, errors, values } = useForm<
     EditUser,
     EditUser
@@ -78,31 +83,31 @@ export const CustomModal = () => {
   };
 
   const handleSave = () => {
-    if (!isEmpty(errors) || !hasAllValues(values)) {
-      alert("feilds are not ok");
+    const modifiedUser = {
+      ...userMapIUser(values, user!),
+      image: user?.image ? user?.image : image,
+    };
+
+    if (!hasAllValues(modifiedUser)) {
+      alert(EMPTY_FIELDS);
       return;
     }
 
     const action = user?.id ? updateUser : createUser;
-    const message = user?.id ? UPDATED_USER : ADDED_USER;
-    dispatch(
-      action({
-        ...userMapIUser(values, user!),
-        image: user?.image ? user?.image : image,
-      })
-    );
-    dispatch(
-      addMessage({
-        type: MessageType.SUCCESS,
-        message,
-      })
-    );
+    const message = {
+      type: MessageType.SUCCESS,
+      message: user?.id ? UPDATED_USER : ADDED_USER,
+    };
+
+    dispatch(action(modifiedUser));
+    dispatch(addMessage(message));
     dispatch(unSetUser());
     resetForm({});
   };
 
   const u = user?.id ? IUserMapEditUser(user) : initialNewUser;
   const headerText = user?.id ? HeaderText.UPDATE : HeaderText.CREATE;
+
   return (
     <Modal
       open={Boolean(user)}
@@ -122,6 +127,7 @@ export const CustomModal = () => {
                 label='Email'
                 name='email'
                 value={values.email ?? u.email}
+                error={!!errors.email}
                 onChange={handleChange}
               />
             </Typography>
@@ -199,15 +205,3 @@ export const CustomModal = () => {
 };
 
 export default CustomModal;
-
-const isEmpty = (obj = {}) => Object.values(obj).filter((e) => e).length;
-const hasAllValues = ({
-  title,
-  firstName,
-  lastName,
-  email,
-  country,
-  city,
-  street,
-}: EditUser) =>
-  title && firstName && lastName && email && country && city && street;

@@ -45,6 +45,7 @@ enum TestCases {
   lastName = "lastName",
   title = "title",
   email = "email",
+  country = "country",
   city = "city",
   street = "street",
 }
@@ -117,6 +118,36 @@ const useValidation = <T = {}>(porps: UseValidationProp<T>) => {
           }));
         } else {
           setErrors((errors) => ({ ...errors, [TestCases.email]: "" }));
+        }
+        break;
+      case TestCases.city:
+        if (new RegExp(regularTest).test(value) || !value.trim().length) {
+          setErrors((errors) => ({
+            ...errors,
+            [TestCases.city]: "Enter a valid city address",
+          }));
+        } else {
+          setErrors((errors) => ({ ...errors, [TestCases.city]: "" }));
+        }
+        break;
+      case TestCases.street:
+        if (new RegExp(regularTest).test(value) || !value.trim().length) {
+          setErrors((errors) => ({
+            ...errors,
+            [TestCases.street]: "Enter a valid street address",
+          }));
+        } else {
+          setErrors((errors) => ({ ...errors, [TestCases.street]: "" }));
+        }
+        break;
+      case TestCases.country:
+        if (new RegExp(regularTest).test(value) || !value.trim().length) {
+          setErrors((errors) => ({
+            ...errors,
+            [TestCases.country]: "Enter a valid country address",
+          }));
+        } else {
+          setErrors((errors) => ({ ...errors, [TestCases.country]: "" }));
         }
         break;
 
