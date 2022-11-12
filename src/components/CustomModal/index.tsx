@@ -74,10 +74,10 @@ export const CustomModal = () => {
   };
 
   const handleSave = () => {
-    // if (isEmpty(errors) || !hasAllValues(values)) {
-    //   alert("feilds are not ok");
-    //   return;
-    // }
+    if (isEmpty(errors) || !hasAllValues(values)) {
+      alert("feilds are not ok");
+      return;
+    }
 
     const action = user?.id ? updateUser : createUser;
 
