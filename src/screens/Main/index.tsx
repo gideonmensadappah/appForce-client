@@ -10,6 +10,7 @@ import CreateUser from "../../components/CreateUser/index";
 import TopSection from "../../components/TopSection/index";
 import { IUser } from "../../interfaces/user/user-interface";
 import { searchMatch } from "../../utils/searchMatch";
+import CustomizedSnackbars from "../../components/Snackbars/index";
 
 const Main = () => {
   const users = useSelector(usersSelctor);
@@ -47,6 +48,7 @@ const Main = () => {
       </div>
       <CustomModal />
       <CreateUser />
+      <CustomizedSnackbars />
     </div>
   );
 };

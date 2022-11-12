@@ -12,6 +12,11 @@ export const usersSelctor = createSelector(
   (state) => state.users
 );
 
+export const messageSelector = createSelector(
+  userStateSelector,
+  (state) => state.message
+);
+
 export const radmonImageSelctor = createSelector(userStateSelector, (state) => {
   const randomIndex = Math.floor(Math.random() * state.users?.length!);
   if (state.users[randomIndex]) {

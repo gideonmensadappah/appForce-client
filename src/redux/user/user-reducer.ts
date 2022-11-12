@@ -1,19 +1,29 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../../interfaces/user/user-interface";
 import { get_users } from "./user-actions";
-
+export enum MessageType {
+  ERROR = "ERROR",
+  SUCCESS = "SUCCESS",
+}
+type Message = {
+  type: MessageType | null;
+  message: string;
+};
 type InitialState = {
   loading: boolean;
   user: IUser | null;
   users: IUser[];
-  error: string;
+  message: Message;
 };
 
 const initialState: InitialState = {
   loading: false,
   user: null,
   users: [] as IUser[],
-  error: "",
+  message: {
+    type: null,
+    message: "",
+  },
 };
 
 export const userSlice = createSlice({
@@ -58,6 +68,15 @@ export const userSlice = createSlice({
       const user_id = action.payload;
       state.users = [...state.users.filter(({ id }) => id !== user_id)];
     },
+    addMessage(state, action: PayloadAction<Message>) {
+      state.message = action.payload;
+    },
+    removeMessage(state) {
+      state.message = {
+        type: null,
+        message: "",
+      };
+    },
   },
   extraReducers(builder) {
     builder.addCase(get_users.fulfilled, (state, action) => {
@@ -71,7 +90,7 @@ export const userSlice = createSlice({
 
     builder.addCase(get_users.rejected, (state, action: any) => {
       state.loading = false;
-      state.error = action.error.message;
+      state.message = action.error.message;
     });
   },
 });
@@ -83,6 +102,8 @@ export const {
   setUpdateUser,
   setNewUser,
   unSetUser,
+  addMessage,
+  removeMessage,
 } = userSlice.actions;
 
 export default userSlice.reducer;

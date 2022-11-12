@@ -9,7 +9,9 @@ import {
 
 import { AppDispatch } from "../../redux/store";
 import {
+  addMessage,
   createUser,
+  MessageType,
   unSetUser,
   updateUser,
 } from "../../redux/user/user-reducer";
@@ -59,6 +61,8 @@ const initialNewUser: EditUser = {
   street: "",
 };
 
+const ADDED_USER = "new user has been added!";
+const UPDATED_USER = "user has been updated!";
 export const CustomModal = () => {
   const image = useSelector(radmonImageSelctor);
   const user = useSelector(currentUserSelector);
@@ -74,17 +78,23 @@ export const CustomModal = () => {
   };
 
   const handleSave = () => {
-    if (isEmpty(errors) || !hasAllValues(values)) {
+    if (!isEmpty(errors) || !hasAllValues(values)) {
       alert("feilds are not ok");
       return;
     }
 
     const action = user?.id ? updateUser : createUser;
-
+    const message = user?.id ? UPDATED_USER : ADDED_USER;
     dispatch(
       action({
         ...userMapIUser(values, user!),
         image: user?.image ? user?.image : image,
+      })
+    );
+    dispatch(
+      addMessage({
+        type: MessageType.SUCCESS,
+        message,
       })
     );
     dispatch(unSetUser());
