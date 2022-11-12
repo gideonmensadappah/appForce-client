@@ -17,14 +17,15 @@ export const SearchInput: FC<Props> = ({ handleChange }) => {
         id='free-solo-demo'
         freeSolo
         options={[]}
-        renderInput={({ fullWidth, size, inputProps }) => (
+        renderInput={({ fullWidth, size, inputProps, ...rest }) => (
           <Input
             onChange={handleChange}
             {...{
               fullWidth,
               size,
               inputProps,
-              lablel: "Search",
+              placeholder: "Search",
+              InputLabelProps: rest.InputLabelProps,
             }}
           />
         )}

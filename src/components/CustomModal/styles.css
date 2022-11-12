@@ -7,6 +7,9 @@
 
   padding: 10%;
   overflow-y: auto;
+
+  display: flex;
+  justify-content:center;
 }
 
 .box-actions_wrapper {
@@ -14,4 +17,13 @@
     justify-content: space-evenly;
 
     margin-top: 5%;
+}
+
+
+@media screen and (max-width: 800px) {
+  .wrapper_box {
+      width: 100%;
+      padding: 0;
+      border: 0;
+  }
 }

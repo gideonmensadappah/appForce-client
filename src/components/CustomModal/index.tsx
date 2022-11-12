@@ -102,83 +102,85 @@ export const CustomModal = () => {
     >
       <div style={wrapperStyle}>
         <Box className='wrapper_box'>
-          <Typography id='modal-modal-title' variant='h6' component='h2'>
-            {headerText}
-          </Typography>
-          <Typography sx={{ mt: 2 }}>Email</Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='Email'
-              name='email'
-              value={values.email ?? u.email}
-              onChange={handleChange}
-            />
-          </Typography>
-          <Typography sx={{ mt: 2 }}>Name</Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='Title'
-              name='title'
-              value={values.title ?? u.title}
-              onChange={handleChange}
-              error={!!errors.title}
-              autoComplete='off'
-            />
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='First Name'
-              name='firstName'
-              value={values.firstName ?? u.firstName}
-              onChange={handleChange}
-              error={!!errors.firstName}
-              autoComplete='off'
-            />
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='Last Name'
-              name='lastName'
-              value={values.lastName ?? u.lastName}
-              onChange={handleChange}
-              error={!!errors.lastName}
-              autoComplete='off'
-            />
-          </Typography>
-          <Typography sx={{ mt: 2 }}>Location</Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='Country'
-              name='country'
-              value={values.country ?? u.country}
-              onChange={handleChange}
-              error={!!errors.country}
-              autoComplete='off'
-            />
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='City'
-              name='city'
-              value={values.city ?? u.city}
-              onChange={handleChange}
-              error={!!errors.city}
-              autoComplete='off'
-            />
-          </Typography>
-          <Typography sx={{ mt: 2 }}>
-            <Input
-              label='Street'
-              name='street'
-              value={values.street ?? u.street}
-              onChange={handleChange}
-              error={!!errors.street}
-              autoComplete='off'
-            />
-          </Typography>
-          <div className='box-actions_wrapper'>
-            <CustomButton onClick={handleClose}>Cancel</CustomButton>
-            <CustomButton onClick={handleSave}>Save</CustomButton>
+          <div>
+            <Typography id='modal-modal-title' variant='h6' component='h2'>
+              {headerText}
+            </Typography>
+            <Typography sx={{ mt: 2 }}>Email</Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='Email'
+                name='email'
+                value={values.email ?? u.email}
+                onChange={handleChange}
+              />
+            </Typography>
+            <Typography sx={{ mt: 2 }}>Name</Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='Title'
+                name='title'
+                value={values.title ?? u.title}
+                onChange={handleChange}
+                error={!!errors.title}
+                autoComplete='off'
+              />
+            </Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='First Name'
+                name='firstName'
+                value={values.firstName ?? u.firstName}
+                onChange={handleChange}
+                error={!!errors.firstName}
+                autoComplete='off'
+              />
+            </Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='Last Name'
+                name='lastName'
+                value={values.lastName ?? u.lastName}
+                onChange={handleChange}
+                error={!!errors.lastName}
+                autoComplete='off'
+              />
+            </Typography>
+            <Typography sx={{ mt: 2 }}>Location</Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='Country'
+                name='country'
+                value={values.country ?? u.country}
+                onChange={handleChange}
+                error={!!errors.country}
+                autoComplete='off'
+              />
+            </Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='City'
+                name='city'
+                value={values.city ?? u.city}
+                onChange={handleChange}
+                error={!!errors.city}
+                autoComplete='off'
+              />
+            </Typography>
+            <Typography sx={{ mt: 2 }}>
+              <Input
+                label='Street'
+                name='street'
+                value={values.street ?? u.street}
+                onChange={handleChange}
+                error={!!errors.street}
+                autoComplete='off'
+              />
+            </Typography>
+            <div className='box-actions_wrapper'>
+              <CustomButton onClick={handleClose}>Cancel</CustomButton>
+              <CustomButton onClick={handleSave}>Save</CustomButton>
+            </div>
           </div>
         </Box>
       </div>
