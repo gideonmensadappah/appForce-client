@@ -35,7 +35,7 @@ const Main = () => {
     }
 
     return (searchResults = users);
-  }, [users.length, userText]);
+  }, [users, userText]);
 
   return (
     <div className='main-wrapper'>

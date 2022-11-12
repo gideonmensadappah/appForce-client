@@ -10,6 +10,7 @@ import { AppDispatch } from "../../redux/store";
 import { deleteUser, setUpdateUser } from "../../redux/user/user-reducer";
 import { CustomButton } from "../CustomButton";
 const CONFIRM_MESSAGE = "are you sure you want to delete?";
+
 export const UserCard: FC<IUser> = (props) => {
   const { id, image, name } = props;
   const { medium } = image;
@@ -20,9 +21,7 @@ export const UserCard: FC<IUser> = (props) => {
   const handleEditClick = () => dispatch(setUpdateUser(id));
   const handleDeleteClick = () => {
     const response = window.confirm(CONFIRM_MESSAGE);
-
     if (!response) return;
-
     dispatch(deleteUser(id));
   };
 
