@@ -20,7 +20,7 @@ const Main = () => {
     if (users.length) return;
 
     dispatch(get_users({ amountOfResult: 10 }));
-  }, []);
+  }, [users.length]);
 
   const handleUserTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newText } = e.target;
