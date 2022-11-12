@@ -3,7 +3,6 @@ import { useState, useCallback, useEffect } from "react";
 const useForm = <Values = {}, Errors = {}>(prop: Values, e: Errors) => {
   //Form values
   const [values, setValues] = useState<Values>({} as Values);
-  console.log({ values, prop });
   //Errors
   const [errors, setErrors] = useState<Errors>(e);
 

@@ -7,9 +7,16 @@ import Typography from "@mui/material/Typography";
 import { IUser } from "../../interfaces/user/user-interface";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
-import { deleteUser, setUpdateUser } from "../../redux/user/user-reducer";
+import {
+  addMessage,
+  deleteUser,
+  setUpdateUser,
+  MessageType,
+} from "../../redux/user/user-reducer";
 import { CustomButton } from "../CustomButton";
+
 const CONFIRM_MESSAGE = "are you sure you want to delete?";
+const DELETED_USER_MEESAGE = "user has been deleted successfully";
 
 export const UserCard: FC<IUser> = (props) => {
   const { id, image, name } = props;
@@ -23,6 +30,12 @@ export const UserCard: FC<IUser> = (props) => {
     const response = window.confirm(CONFIRM_MESSAGE);
     if (!response) return;
     dispatch(deleteUser(id));
+    dispatch(
+      addMessage({
+        type: MessageType.SUCCESS,
+        message: DELETED_USER_MEESAGE,
+      })
+    );
   };
 
   return (
