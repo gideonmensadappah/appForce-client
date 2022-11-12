@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/appForce-client/static/css/main.d624be93.css",
-    "main.js": "/appForce-client/static/js/main.51334270.js",
-    "static/js/787.20bcb962.chunk.js": "/appForce-client/static/js/787.20bcb962.chunk.js",
-    "index.html": "/appForce-client/index.html",
-    "main.d624be93.css.map": "/appForce-client/static/css/main.d624be93.css.map",
-    "main.51334270.js.map": "/appForce-client/static/js/main.51334270.js.map",
-    "787.20bcb962.chunk.js.map": "/appForce-client/static/js/787.20bcb962.chunk.js.map"
+    "main.css": "/appsforce-client/static/css/main.d624be93.css",
+    "main.js": "/appsforce-client/static/js/main.c02f43aa.js",
+    "static/js/787.20bcb962.chunk.js": "/appsforce-client/static/js/787.20bcb962.chunk.js",
+    "index.html": "/appsforce-client/index.html",
+    "main.d624be93.css.map": "/appsforce-client/static/css/main.d624be93.css.map",
+    "main.c02f43aa.js.map": "/appsforce-client/static/js/main.c02f43aa.js.map",
+    "787.20bcb962.chunk.js.map": "/appsforce-client/static/js/787.20bcb962.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d624be93.css",
-    "static/js/main.51334270.js"
+    "static/js/main.c02f43aa.js"
   ]
 }
