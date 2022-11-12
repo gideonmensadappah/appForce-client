@@ -2,44 +2,36 @@ import uniqid from "uniqid";
 import { EditUser } from "../components/CustomModal/index";
 import { IUser } from "../interfaces/user/user-interface";
 
-export const userMapIUser = (user: EditUser): IUser => {
-  const { firstName, lastName, title, email, street, ...rest } = user;
+export const userMapIUser = (user: EditUser, originalUser: IUser): IUser => {
+  const { firstName, lastName, title, email, street, image, ...rest } = user;
+  const {
+    id,
+    name,
+    email: originalEmail = "",
+    location,
+    image: originalIamge,
+  } = originalUser;
+  const { first = "", last = "", title: originalTitle = "" } = name ?? {};
+  const { street: originalStreet, ...originalRest } = location ?? {};
+  const { name: originalStreetName } = originalStreet ?? {};
 
   return {
     image: {
-      medium: "",
+      medium: image ?? originalIamge?.medium,
     },
-    id: uniqid(),
+    id: id ? id : uniqid(),
     name: {
-      first: firstName,
-      last: lastName,
-      title,
+      first: firstName ?? first,
+      last: lastName ?? last,
+      title: title ?? originalTitle,
     },
-    email,
+    email: email ?? originalEmail,
     location: {
-      ...rest,
+      city: rest.city ?? originalRest.city,
+      country: rest.country ?? originalRest.country,
       street: {
-        name: street,
-        number: 1,
+        name: street ?? originalStreetName,
       },
     },
-  };
-};
-
-export const IUserMapEditUser = (user: IUser): EditUser => {
-  const {
-    name: { first: firstName = "", last: lastName = "", title = "" },
-    email = "",
-    location,
-  } = user;
-
-  return {
-    firstName,
-    lastName,
-    title,
-    email,
-    country: location.country,
-    city: location.city,
-    street: location.street.name,
   };
 };

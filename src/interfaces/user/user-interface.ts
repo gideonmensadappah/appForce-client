@@ -45,7 +45,7 @@ export interface Location {
 }
 
 export interface Street {
-  number: number;
+  number?: number;
   name: string;
 }
 

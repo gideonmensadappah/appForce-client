@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
@@ -6,20 +6,21 @@ import {
   currentUserSelector,
   radmonImageSelctor,
 } from "../../redux/user/user-selector";
-import { useDispatch, useSelector } from "react-redux";
+
 import { AppDispatch } from "../../redux/store";
 import {
   createUser,
   unSetUser,
   updateUser,
 } from "../../redux/user/user-reducer";
-import { IUser, Location, Name } from "../../interfaces/user/user-interface";
 import Input from "../Input";
 import { CustomButton } from "../CustomButton";
 
-import "./styles.css";
 import useForm from "../../Hooks/useForm";
-import { userMapIUser, IUserMapEditUser } from "../../utils/userMapIUser";
+import { userMapIUser } from "../../utils/userMapIUser";
+
+import "./styles.css";
+import { IUserMapEditUser } from "../../utils/IUserMapEditUser";
 
 const wrapperStyle = {
   width: "100%",
@@ -36,11 +37,6 @@ enum HeaderText {
   CREATE = "Create New User",
   UPDATE = "Update User",
 }
-enum TypeForm {
-  CREATE = "create",
-  UPDATE = "update",
-}
-type Props = {};
 
 export type EditUser = {
   title: string;
@@ -50,12 +46,22 @@ export type EditUser = {
   country: string;
   city: string;
   street: string;
+  image?: string;
 };
 
-export const CustomModal: FC<Props> = (props) => {
+const initialNewUser: EditUser = {
+  title: "",
+  firstName: "",
+  lastName: "",
+  email: "",
+  country: "",
+  city: "",
+  street: "",
+};
+
+export const CustomModal = () => {
   const image = useSelector(radmonImageSelctor);
   const user = useSelector(currentUserSelector);
-
   const { handleChange, resetForm, errors, values } = useForm<
     EditUser,
     EditUser
@@ -73,30 +79,20 @@ export const CustomModal: FC<Props> = (props) => {
     //   return;
     // }
 
-    if (user?.id) {
-      dispatch(
-        updateUser({
-          ...userMapIUser(values),
-          id: user.id,
-          image: user.image,
-        })
-      );
-    } else {
-      dispatch(
-        createUser({
-          ...userMapIUser(values),
-          id: user?.id!,
-          image,
-        })
-      );
-    }
+    const action = user?.id ? updateUser : createUser;
 
+    dispatch(
+      action({
+        ...userMapIUser(values, user!),
+        image: user?.image ? user?.image : image,
+      })
+    );
     dispatch(unSetUser());
     resetForm({});
   };
 
+  const u = user?.id ? IUserMapEditUser(user) : initialNewUser;
   const headerText = user?.id ? HeaderText.UPDATE : HeaderText.CREATE;
-
   return (
     <Modal
       open={Boolean(user)}
@@ -114,7 +110,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Email'
               name='email'
-              value={values.email ?? user?.email ?? ""}
+              value={values.email ?? u.email}
               onChange={handleChange}
             />
           </Typography>
@@ -123,7 +119,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Title'
               name='title'
-              value={values.title ?? user?.name?.title ?? ""}
+              value={values.title ?? u.title}
               onChange={handleChange}
               error={!!errors.title}
               autoComplete='off'
@@ -133,7 +129,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='First Name'
               name='firstName'
-              value={values.firstName ?? user?.name?.first ?? ""}
+              value={values.firstName ?? u.firstName}
               onChange={handleChange}
               error={!!errors.firstName}
               autoComplete='off'
@@ -143,7 +139,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Last Name'
               name='lastName'
-              value={values.lastName ?? user?.name?.last ?? ""}
+              value={values.lastName ?? u.lastName}
               onChange={handleChange}
               error={!!errors.lastName}
               autoComplete='off'
@@ -154,7 +150,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Country'
               name='country'
-              value={values.country ?? user?.location?.country ?? ""}
+              value={values.country ?? u.country}
               onChange={handleChange}
               error={!!errors.country}
               autoComplete='off'
@@ -164,7 +160,7 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='City'
               name='city'
-              value={values.city ?? user?.location?.city ?? ""}
+              value={values.city ?? u.city}
               onChange={handleChange}
               error={!!errors.city}
               autoComplete='off'
@@ -174,19 +170,15 @@ export const CustomModal: FC<Props> = (props) => {
             <Input
               label='Street'
               name='street'
-              value={values.street ?? user?.location?.street?.name ?? ""}
+              value={values.street ?? u.street}
               onChange={handleChange}
               error={!!errors.street}
               autoComplete='off'
             />
           </Typography>
           <div className='box-actions_wrapper'>
-            <CustomButton {...{ ...props, onClick: handleClose }}>
-              Cancel
-            </CustomButton>
-            <CustomButton {...{ ...props, onClick: handleSave }}>
-              Save
-            </CustomButton>
+            <CustomButton onClick={handleClose}>Cancel</CustomButton>
+            <CustomButton onClick={handleSave}>Save</CustomButton>
           </div>
         </Box>
       </div>
