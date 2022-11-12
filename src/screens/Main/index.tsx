@@ -45,7 +45,7 @@ const Main = () => {
           <UserCard {...user} key={user.id} />
         ))}
       </div>
-      <CustomModal headerText='Create New User' />
+      <CustomModal />
       <CreateUser />
     </div>
   );

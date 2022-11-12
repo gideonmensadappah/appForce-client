@@ -27,10 +27,11 @@ const wrapperStyle = {
   display: "flex",
   justifyContent: "center",
 };
-
-type Props = {
-  headerText?: string;
-};
+enum HeaderText {
+  CREATE = "Create New User",
+  UPDATE = "Update User",
+}
+type Props = {};
 
 export type EditUser = {
   title: string;
@@ -43,8 +44,6 @@ export type EditUser = {
 };
 
 export const CustomModal: FC<Props> = (props) => {
-  const { headerText = "" } = props;
-  //
   const image = useSelector(radmonImageSelctor);
   const user = useSelector(currentUserSelector);
 
@@ -70,6 +69,8 @@ export const CustomModal: FC<Props> = (props) => {
     dispatch(unSetUser());
     resetForm({});
   };
+
+  const headerText = user?.id ? HeaderText.UPDATE : HeaderText.CREATE;
 
   return (
     <Modal
